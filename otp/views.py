@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from lottee_new.helpers import get_object_or_none
 from otp.models import OTP
 from otp.serializers import OTPSerializer
-from lottee_new.tasks import send_code_by_email
+from tasks import send_code
 
 
 class OTPCreateView(CreateAPIView):
@@ -27,12 +27,7 @@ class OTPCreateView(CreateAPIView):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid(raise_exception=True):
             otp = serializer.save()
-            if '@' in otp.identifier:
-                print('AAAAAAAAAAAAAAAAAA')
-                send_code_by_email.delay(otp.identifier, otp.code)
-            else:
-                pass
-                # send_sms(otp)
+            send_code(otp.identifier, otp.code)
             return Response(status=status.HTTP_201_CREATED)
         return Response(status=status.HTTP_429_TOO_MANY_REQUESTS)
 

@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'lot',
     'number',
     'tracker',
+    'django_celery_results',
 ]
 
 MIDDLEWARE = [
@@ -125,12 +126,18 @@ CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 '''
 # CELERY STUFF
+'''
 BROKER_URL = 'redis://localhost:6379'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 # CELERY_ACCEPT_CONTENT = ['application/json']
 # CELERY_TASK_SERIALIZER = 'json'
 # CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'Asia/Vietnam'
+'''
+
+CELERY_RESULT_BACKEND = 'django-db'
+# CELERY_RESULT_BACKEND = 'django-cache'
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/

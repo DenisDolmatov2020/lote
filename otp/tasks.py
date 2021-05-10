@@ -1,21 +1,49 @@
-# Create your tasks here
+#!/usr/bin/env python
 
-from celery import shared_task
-
-import django
-django.setup()
-
-
-@shared_task
-def add(x, y):
-    return x + y
+from huey import SqliteHuey
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from twilio.rest import Client
+import os
 
 
-@shared_task
-def mul(x, y):
-    return x * y
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'lottee_new.settings')
+
+huey = SqliteHuey(filename='/tmp/demo.db')
 
 
-@shared_task
-def xsum(numbers):
-    return sum(numbers)
+@huey.task()
+def send_code(identifier, code):
+    import django
+    django.setup()
+    # settings.configure()
+    if '@' in identifier:
+        html_message = render_to_string('email.html', {
+            'title': 'Подтверждение почты',
+            'text': f'Lottee code {code}',
+            'button_text': 'Подтвердить почту',
+            'code': code
+            # 'link': '{}/auth?page=1&identifier={}&code={}'.format(os.environ.get("BASE_URL"), identifier, code)
+        })
+        send_mail(
+            '{}'.format('Lottee подтверждение почты'),
+            # message:
+            'CONFIRM EMAIL',
+            # from:
+            # EMAIL_HOST_USER,
+            os.environ['EMAIL_HOST_USER'],
+            # 'admin@lottee.online',
+            # to:
+            [identifier],
+            html_message=html_message
+        )
+    else:
+        account_sid = os.environ['TWILIO_ACCOUNT_SID']
+        auth_token = os.environ['TWILIO_AUTH_TOKEN']
+        client = Client(account_sid, auth_token)
+
+        client.messages.create(
+            body=f'Lottee code {code}',
+            from_=os.environ['TWILIO_FROM_NUMBER'],
+            to=identifier
+        )

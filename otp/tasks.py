@@ -10,6 +10,11 @@ import os
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'lottee_new.settings')
 
 huey = SqliteHuey(filename='/tmp/demo.db')
+# from huey import RedisHuey
+# from redis import ConnectionPool
+
+# pool = ConnectionPool(host='127.0.0.1', port=6379, max_connections=20)
+# huey = RedisHuey('lote', connection_pool=pool)
 
 
 @huey.task()

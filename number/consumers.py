@@ -1,6 +1,5 @@
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import JsonWebsocketConsumer
-import json
 
 from number.models import Number
 from number.serializers import NumberSerializer
@@ -10,9 +9,14 @@ from number.serializers import NumberSerializer
         user = self.scope["user"]
         await self.accept()'''
 
+# chat/consumers.py
+import json
+from channels.generic.websocket import WebsocketConsumer
+
 
 class PrizeConsumer(JsonWebsocketConsumer):
     def connect(self):
+        print('Try Connecting')
         self.room_group_name = 'prize'
 
         async_to_sync(self.channel_layer.group_add)(

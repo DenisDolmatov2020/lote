@@ -9,6 +9,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('chat/', include('chat.urls')),
     path('api-auth/', include('rest_framework.urls')),
     path('api/my-user/', include('my_user.urls')),
     path('api/otp/', include('otp.urls')),

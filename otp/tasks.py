@@ -9,7 +9,7 @@ import os
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'lottee_new.settings')
 
-huey = SqliteHuey(filename='/tmp/demo.db')
+huey = SqliteHuey(filename='db.sqlite3')
 # from huey import RedisHuey
 # from redis import ConnectionPool
 

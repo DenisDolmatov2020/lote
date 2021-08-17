@@ -1,4 +1,5 @@
 import requests
+from channels.layers import get_channel_layer
 from rest_framework.utils import json
 from number.models import Number
 from asgiref.sync import async_to_sync
@@ -34,7 +35,6 @@ def choose_winners(lot):
 
     winners_serializer = WinnerSerializer(winners, many=True)
     winners.update(won=True)
-    '''
     layer = get_channel_layer()
     async_to_sync(layer.group_send)('prize', {
         'type': 'have_prize',
@@ -44,4 +44,3 @@ def choose_winners(lot):
             'winners': winners_serializer.data
         }
     })
-    '''

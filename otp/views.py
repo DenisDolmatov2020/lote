@@ -18,7 +18,7 @@ class OTPCreateView(CreateAPIView):
     def create(self, request, *args, **kwargs):
         otp = get_object_or_none(OTP, identifier=request.data['identifier'])
         if otp:
-            if timezone.now() - timedelta(seconds=int(os.environ.get('TIMER_TIME'))) > otp.created:
+            if timezone.now() - timedelta(seconds=int(20)) > otp.created:
                 otp.delete()
             else:
                 return Response(status=status.HTTP_429_TOO_MANY_REQUESTS)
@@ -26,6 +26,8 @@ class OTPCreateView(CreateAPIView):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid(raise_exception=True):
             otp = serializer.save()
+            print('VALID IF')
+            print(otp.code)
             send_code(otp.identifier, otp.code)
             return Response(status=status.HTTP_201_CREATED)
 

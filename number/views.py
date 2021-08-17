@@ -4,12 +4,11 @@ from number.models import Number
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from lottee_new.permissions import ReadOnly
 from number.service import choose_winners
 
 
 class NumberUpdateView(UpdateAPIView):
-    permission_classes = [IsAuthenticated | ReadOnly]
+    permission_classes = [IsAuthenticated]
 
     def partial_update(self, request, *args, **kwargs):
         numbers = Number.objects.select_related('lot__user').filter(lot_id=self.request.data['lot_id'])

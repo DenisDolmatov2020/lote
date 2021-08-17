@@ -1,21 +1,18 @@
 from rest_framework import status
 from rest_framework.response import Response
-
 from lottee_new.helpers import get_object_or_none
 from my_user.serializers import UserSerializer, UpdatePasswordSerializer, ResetPasswordSerializer
 from my_user.models import User
 from rest_framework.generics import CreateAPIView, RetrieveUpdateAPIView, UpdateAPIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.contrib.auth import get_user_model
-from rest_framework.decorators import api_view
-from django.contrib.auth.hashers import make_password
-
-
-# checking account by email and phone number
-from otp.models import OTP
+from rest_framework.decorators import api_view, permission_classes
+from number.models import Number
+from number.serializers import NumberSerializer
 
 
 @api_view(['POST'])
+@permission_classes([AllowAny])
 def have_account(request):
     # Проверка статуса регистрации почты
     user = get_object_or_none(User, identifier=request.data['identifier'])
@@ -27,6 +24,7 @@ def have_account(request):
 
 # checking account by email and phone number
 @api_view(['POST'])
+@permission_classes([AllowAny])
 def free_account(request):
     # Проверка статуса регистрации почты
     user = get_object_or_none(User, identifier=request.data['identifier'])
@@ -44,7 +42,6 @@ def reset_password(request):
         if serializer.is_valid():
             serializer.save()
             return Response(status=status.HTTP_200_OK)
-        print(serializer.errors)
     return Response(status=status.HTTP_412_PRECONDITION_FAILED)
 
 
@@ -61,10 +58,11 @@ class UserRetrieveUpdateView(RetrieveUpdateAPIView):
 
     def retrieve(self, request, *args, **kwargs):
         serializer = self.get_serializer(request.user)
-        # user_numbers = Number.objects.filter(user=request.user)
         data_ = serializer.data
-        # data_['numbers'] = {number.lot_id: number.num for number in user_numbers}
-        # data_['prize_count'] = user_numbers.filter(won=True).count()
+        numbers = Number.objects.filter(user=request.user)
+        numbers_serializer = NumberSerializer(numbers, many=True)
+        data_['numbers'] = numbers_serializer.data
+        data_['prize_count'] = numbers.filter(won=True).count()
         return Response(
             status=status.HTTP_200_OK,
             data={'user': data_}

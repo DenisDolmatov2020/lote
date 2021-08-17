@@ -34,6 +34,10 @@ class UserSerializer(serializers.ModelSerializer):
             otp = OTP.objects.get(identifier=validated_data['identifier'])
             otp.delete()
             validated_data['password'] = make_password(validated_data['password'])  # get the hashed password
+            if '@' in validated_data['identifier']:
+                validated_data['email'] = validated_data['identifier']
+            else:
+                validated_data['phone'] = validated_data['identifier']
             instance = User.objects.create(**validated_data)  # create a user
             return instance
         except OTP.DoesNotExist:
@@ -56,11 +60,10 @@ class UpdatePasswordSerializer(serializers.Serializer):
 
     def validate(self, data):
         if data['password'] != data['password_repeat']:
-            raise serializers.ValidationError({'message': _('Пароли не совпадают.')})
+            raise serializers.ValidationError({'message': _('auth.password_mismatch')})
         user = self.context['request'].user
         if not user.check_password(data['old_password']):
-            raise serializers.ValidationError({'message':
-                                               [_('Некорректно введен старый пароль.'),  _('Пароли не совпадают.')]})
+            raise serializers.ValidationError({'message': _('auth.old_password_incorrect')})
         password_validation.validate_password(data['password'], user)
         return data
 

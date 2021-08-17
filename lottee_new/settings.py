@@ -3,14 +3,18 @@ from pathlib import Path
 import os
 # from dotenv import load_dotenv, find_dotenv
 # load_dotenv(find_dotenv())
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-%4#+f)&ozd$5d5f51my90cnx&#qi#tle1)^gai_4^7y_7bua=r'  # os.environ.get("SECRET_KEY")
+SECRET_KEY = os.getenv("SECRET_KEY")
 
-DEBUG = True # (os.environ.get("DEBUG") == 'True')
+DEBUG = (os.getenv("DEBUG") == 'True')
 
-ALLOWED_HOSTS = ['127.0.0.1']  # os.environ.get("ALLOWED_HOSTS").split(' ')
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS").split(' ')
 
 
 # Application definition
@@ -31,7 +35,7 @@ INSTALLED_APPS = [
     'lot',
     'number',
     'tracker',
-    'channels'
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -100,7 +104,10 @@ AUTH_PASSWORD_VALIDATORS = []
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+    ),
+    'DEFAULT_PERMISSION_CLASSES': [
+       'rest_framework.permissions.AllowAny',
+    ]
 }
 
 '''CHANNEL_LAYERS = {
@@ -152,12 +159,12 @@ EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')'''
 
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.beget.ru'
+EMAIL_BACKEND = os.getenv("EMAIL_BACKEND") # 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = os.getenv("EMAIL_HOST")
 EMAIL_USE_TLS = 1
-EMAIL_PORT = 25
-EMAIL_HOST_USER = 'admin@lottee.online'
-EMAIL_HOST_PASSWORD = 'DenVik37ww'
+EMAIL_PORT = os.getenv("EMAIL_PORT")
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER") # 'admin@lottee.online'
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_URL = '/media/'

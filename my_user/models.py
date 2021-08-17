@@ -4,13 +4,12 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.dispatch import receiver
-from django.db.models.signals import pre_save
 from django_rest_passwordreset.signals import reset_password_token_created
 from django.core.mail import send_mail
 from lottee_new.settings import EMAIL_HOST_USER
 from django.template.loader import render_to_string
 from phonenumber_field.modelfields import PhoneNumberField
-# from my_user.manager import UserManager
+from my_user.manager import UserManager
 
 
 @receiver(reset_password_token_created)
@@ -57,7 +56,7 @@ class User(AbstractUser):
 
     USERNAME_FIELD = 'identifier'
     REQUIRED_FIELDS = ['name']
-    # objects = UserManager()
+    objects = UserManager()
 
     def __str__(self):
         return self.name or 'no have name'

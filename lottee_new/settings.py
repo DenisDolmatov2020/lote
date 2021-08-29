@@ -16,7 +16,6 @@ ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS").split(' ')
 # Application definition
 
 INSTALLED_APPS = [
-    'chat',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -24,6 +23,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'channels',
     'django_rest_passwordreset',
     'phonenumber_field',
     'otp',
@@ -31,7 +31,7 @@ INSTALLED_APPS = [
     'lot',
     'number',
     'tracker',
-    'channels',
+
 ]
 
 MIDDLEWARE = [
@@ -86,8 +86,8 @@ SIMPLE_JWT = {
     'ROTATE_REFRESH_TOKENS': True,  # IMPORTANT
     'BLACKLIST_AFTER_ROTATION': True  # IMPORTANT
 }
-'''
-DATABASES = {
+
+'''DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',

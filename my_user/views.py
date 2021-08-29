@@ -17,21 +17,9 @@ def have_account(request):
     # Проверка статуса регистрации почты
     user = get_object_or_none(User, identifier=request.data['identifier'])
 
-    if user:
+    if user and request.data['have'] or not user and not request.data['have']:
         return Response(status=status.HTTP_200_OK)
     return Response(status=status.HTTP_404_NOT_FOUND)
-
-
-# checking account by email and phone number
-@api_view(['POST'])
-@permission_classes([AllowAny])
-def free_account(request):
-    # Проверка статуса регистрации почты
-    user = get_object_or_none(User, identifier=request.data['identifier'])
-
-    if not user:
-        return Response(status=status.HTTP_200_OK)
-    return Response(status=status.HTTP_406_NOT_ACCEPTABLE)
 
 
 @api_view(['PATCH'])

@@ -1,5 +1,5 @@
 from my_user.views import \
-    UserCreateView, UserRetrieveUpdateView, UpdatePasswordView, have_account, free_account, reset_password
+    UserCreateView, UserRetrieveUpdateView, UpdatePasswordView, have_account, reset_password
 from rest_framework_simplejwt.views import TokenRefreshView, TokenObtainPairView
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
@@ -8,7 +8,6 @@ from rest_framework.routers import DefaultRouter
 urlpatterns = [
     # user
     path('have-account/', have_account),
-    path('free-account/', free_account),
     path('create/', UserCreateView.as_view(), name='create'),
     path('', UserRetrieveUpdateView.as_view(), name='retrieve-update'),
     # token

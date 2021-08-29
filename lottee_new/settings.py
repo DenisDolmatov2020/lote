@@ -1,11 +1,7 @@
 from datetime import timedelta
 from pathlib import Path
 import os
-# from dotenv import load_dotenv, find_dotenv
-# load_dotenv(find_dotenv())
 from dotenv import load_dotenv
-import os
-
 load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -71,9 +67,9 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            "hosts": [('127.0.0.1', 6379)],
-        },
-    },
+            "hosts": [(os.getenv('REDIS_HOST'), os.getenv("REDIS_PORT"))],
+        }
+    }
 }
 WSGI_APPLICATION = 'lottee_new.wsgi.application'
 
@@ -90,14 +86,14 @@ SIMPLE_JWT = {
     'ROTATE_REFRESH_TOKENS': True,  # IMPORTANT
     'BLACKLIST_AFTER_ROTATION': True  # IMPORTANT
 }
-'''
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
-}'''
-
+}
+'''
 DATABASES = {
 
     'default': {
@@ -115,9 +111,9 @@ DATABASES = {
         'PORT': os.getenv('POSTGRES_PORT')
 
     }
-
+    
 }
-
+'''
 
 AUTH_PASSWORD_VALIDATORS = []
 

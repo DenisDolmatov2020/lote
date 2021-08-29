@@ -1,3 +1,5 @@
+import os
+
 import requests
 from channels.layers import get_channel_layer
 from rest_framework.utils import json
@@ -16,7 +18,7 @@ def choose_winners(lot):
             "jsonrpc": "2.0",
             "method": "generateIntegers",
             "params": {
-                "apiKey": "fc702e8a-53f0-4dc1-83f2-63c07fb0e835",
+                "apiKey": os.getenv("RANDOM_API_KEY"),
                 "n": lot.winners,
                 "min": 1,
                 "max": lot.players,

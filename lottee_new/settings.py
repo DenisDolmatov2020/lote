@@ -86,14 +86,14 @@ SIMPLE_JWT = {
     'ROTATE_REFRESH_TOKENS': True,  # IMPORTANT
     'BLACKLIST_AFTER_ROTATION': True  # IMPORTANT
 }
-
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
-}
-'''
+}'''
+
 DATABASES = {
 
     'default': {
@@ -113,7 +113,7 @@ DATABASES = {
     }
     
 }
-'''
+
 
 AUTH_PASSWORD_VALIDATORS = []
 

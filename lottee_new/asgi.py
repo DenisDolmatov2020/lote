@@ -12,9 +12,9 @@ application = get_asgi_application()
 import os
 import django
 
-
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "lottee_new.settings")
 django.setup()
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "lottee_new.settings")
+
 
 
 from channels.auth import AuthMiddlewareStack

@@ -7,20 +7,27 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'lottee_new.settings')
 application = get_asgi_application()
 '''
 # mysite/asgi.py
+
+
 import os
+import django
+
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "lottee_new.settings")
+django.setup()
+
 
 from channels.auth import AuthMiddlewareStack
 from channels.routing import ProtocolTypeRouter, URLRouter
 from django.core.asgi import get_asgi_application
-import number.routing
+from number import routing
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "lottee_new.settings")
 
 application = ProtocolTypeRouter({
   "http": get_asgi_application(),
   "websocket": AuthMiddlewareStack(
         URLRouter(
-            number.routing.websocket_urlpatterns
+            routing.websocket_urlpatterns
         )
     ),
 })

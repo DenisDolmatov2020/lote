@@ -11,13 +11,15 @@ application = get_asgi_application()
 
 import os
 import django
+from django.core.asgi import get_asgi_application
+
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "lottee_new.settings")
 django.setup()
-
+# application = get_asgi_application()
 
 from channels.auth import AuthMiddlewareStack
 from channels.routing import ProtocolTypeRouter, URLRouter
-from django.core.asgi import get_asgi_application
+
 from number import routing
 
 application = ProtocolTypeRouter({
@@ -26,7 +28,7 @@ application = ProtocolTypeRouter({
         URLRouter(
             routing.websocket_urlpatterns
         )
-    ),
+    )
 })
 '''
 import os

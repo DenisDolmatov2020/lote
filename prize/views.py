@@ -1,12 +1,13 @@
+from typing import Union
+
 from rest_framework.generics import ListAPIView
 from prize.serializers import PrizeSerializer
 from number.models import Number
 from rest_framework.permissions import IsAuthenticated
-from lottee_new.permissions import ReadOnly
 
 
 class PrizeListView(ListAPIView):
-    permission_classes = [IsAuthenticated | ReadOnly]
+    permission_classes = IsAuthenticated
     serializer_class = PrizeSerializer
 
     def get_queryset(self):

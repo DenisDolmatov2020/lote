@@ -21,9 +21,6 @@ class LotViewSet(ViewSet):
     def list(self, request, *args):
         lots = Lot.objects.filter(active=True)
         serializer = self.serializer(lots, many=True)
-        print('LIST')
-        print(lots)
-        print(serializer.data)
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None, *args):

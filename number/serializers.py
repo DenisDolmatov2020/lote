@@ -8,7 +8,7 @@ class NumberSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Number
-        fields = ['user', 'id', 'lot', 'num']
+        fields = ['user', 'id', 'lot', 'num', 'won']
 
 
 class WinnerSerializer(serializers.ModelSerializer):

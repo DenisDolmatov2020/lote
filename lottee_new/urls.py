@@ -1,6 +1,5 @@
 from django.contrib import admin
 from django.urls import path, include
-from number.views import NumberUpdateView
 from prize.views import PrizeListView
 from tracker.views import TrackerView
 from django.conf import settings
@@ -13,9 +12,9 @@ urlpatterns = [
     path('api/my-user/', include('my_user.urls')),
     path('api/otp/', include('otp.urls')),
     path('api/lot/', include('lot.urls')),
-    path('api/number/', NumberUpdateView.as_view(), name='NumberUpdateView'),
-    path('api/prize/', PrizeListView.as_view(), name='PrizeListView'),
-    path('api/tracker', TrackerView.as_view(), name='tracker-view'),
+    path('api/number/', include('number.urls')),
+    path('api/prize/', PrizeListView.as_view(), name='prize-list'),
+    path('api/tracker', TrackerView.as_view(), name='tracker-view')
 ]
 
 if settings.DEBUG:

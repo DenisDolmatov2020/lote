@@ -1,10 +1,19 @@
 import random
-from rest_framework.generics import UpdateAPIView
+from rest_framework.generics import ListAPIView, UpdateAPIView
 from number.models import Number
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from number.serializers import NumberSerializer
 from number.service import choose_winners
+
+
+class NumberList(ListAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = NumberSerializer
+
+    def get_queryset(self):
+        return Number.objects.filter(user=self.request.user)
 
 
 class NumberUpdateView(UpdateAPIView):

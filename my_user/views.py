@@ -46,14 +46,9 @@ class UserRetrieveUpdateView(RetrieveUpdateAPIView):
 
     def retrieve(self, request, *args, **kwargs):
         serializer = self.get_serializer(request.user)
-        data_ = serializer.data
-        numbers = Number.objects.filter(user=request.user)
-        numbers_serializer = NumberSerializer(numbers, many=True)
-        data_['numbers'] = numbers_serializer.data
-        data_['prize_count'] = numbers.filter(won=True).count()
         return Response(
             status=status.HTTP_200_OK,
-            data={'user': data_}
+            data={'user': serializer.data}
         )
 
     def partial_update(self, request, *args, **kwargs):

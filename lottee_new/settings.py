@@ -85,7 +85,7 @@ SIMPLE_JWT = {
     'ROTATE_REFRESH_TOKENS': True,  # IMPORTANT
     'BLACKLIST_AFTER_ROTATION': True  # IMPORTANT
 }
-
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -112,7 +112,7 @@ DATABASES = {
     }
 
 }
-'''
+
 
 AUTH_PASSWORD_VALIDATORS = []
 
@@ -174,7 +174,7 @@ EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')'''
 
 
-EMAIL_BACKEND = os.getenv("EMAIL_BACKEND") # 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = os.getenv("EMAIL_BACKEND")  # 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = os.getenv("EMAIL_HOST")
 EMAIL_USE_TLS = 1
 EMAIL_PORT = os.getenv("EMAIL_PORT")

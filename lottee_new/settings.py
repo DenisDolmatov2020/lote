@@ -66,7 +66,7 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
-            "hosts": [(os.getenv('REDIS_HOST'), os.getenv("REDIS_PORT"))],
+            "hosts": [(os.getenv('REDIS_HOST'), os.getenv('REDIS_PORT'))],
         }
     }
 }
@@ -178,7 +178,7 @@ EMAIL_BACKEND = os.getenv("EMAIL_BACKEND")  # 'django.core.mail.backends.smtp.Em
 EMAIL_HOST = os.getenv("EMAIL_HOST")
 EMAIL_USE_TLS = 1
 EMAIL_PORT = os.getenv("EMAIL_PORT")
-EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER") # 'admin@lottee.online'
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")  # 'admin@lottee.online'
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')

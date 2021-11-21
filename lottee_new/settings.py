@@ -30,7 +30,8 @@ INSTALLED_APPS = [
     'my_user',
     'lot',
     'number',
-    'tracker'
+    'tracker',
+    'rules'
 ]
 
 MIDDLEWARE = [

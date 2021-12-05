@@ -45,6 +45,8 @@ class User(AbstractUser):
     email = models.EmailField(_('email address'), unique=True, null=True)
     phone = PhoneNumberField(_('phone_number'), unique=True, null=True)
 
+    url = models.URLField(_('link_company'), null=True)
+
     # models.CharField(_('phone_number'), max_length=32, unique=True, null=True, blank=True)
     address = models.CharField(max_length=200, null=True)
     image = models.ImageField(verbose_name='Аватар', upload_to='user/', null=True)

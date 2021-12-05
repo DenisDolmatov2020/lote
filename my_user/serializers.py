@@ -19,6 +19,7 @@ class UserSerializer(serializers.ModelSerializer):
             'identifier',
             'email',
             'phone',
+            'url',
             'address',
             'image',
             'energy',

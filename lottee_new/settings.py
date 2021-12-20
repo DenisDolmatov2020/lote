@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'django_rest_passwordreset',
     'phonenumber_field',
     'otp',
+    'shop',
     'my_user',
     'lot',
     'number',

@@ -56,6 +56,9 @@ class User(AbstractUser):
     energy = models.PositiveSmallIntegerField(verbose_name='Энергия', default=15)
     karma = models.SmallIntegerField(verbose_name='Карма пользователя', default=0)
 
+    balance = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
+    expected_balance = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
+
     USERNAME_FIELD = 'identifier'
     REQUIRED_FIELDS = ['name']
     objects = UserManager()

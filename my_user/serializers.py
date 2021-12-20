@@ -21,13 +21,15 @@ class UserSerializer(serializers.ModelSerializer):
             'phone',
             'url',
             'address',
+            'balance',
+            'expected_balance',
             'image',
             'energy',
             'karma',
             'password',
             'old_password'
         ]
-        read_only_fields = ('energy', 'karma')
+        read_only_fields = ('energy', 'karma', 'balance', 'expected_balance')
         extra_kwargs = {'password': {'write_only': True}, 'old_password': {'write_only': True}}
 
     def create(self, validated_data):

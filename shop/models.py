@@ -12,6 +12,7 @@ class GroupShop(models.Model):
 
 class Shop(models.Model):
     """ Shop model """
+    active = models.BooleanField(_('Active now'), default=True)
     name = models.CharField(_('Company name'), max_length=255, unique=True)
     slug = models.SlugField(unique=True)
     description = models.TextField(_('Describe shop'), null=True)
@@ -27,3 +28,20 @@ class Shop(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class ShopCondition(models.Model):
+    active = models.BooleanField(default=True)
+    shop = models.ForeignKey(Shop, related_name='conditions_set', on_delete=models.CASCADE)
+    title = models.CharField(max_length=80)
+    percent = models.FloatField(default=0.00)
+
+    def __str__(self):
+        return str(self.title)
+
+
+class ShopComment(models.Model):
+    active = models.BooleanField(default=True)
+    shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
+    text = models.TextField()
+    answer = models.TextField()
